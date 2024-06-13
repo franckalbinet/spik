@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "spik"
+  site-url: "https://franckalbinet.github.io/spik"
+  description: "Reproducible research code albinet et al."
+  repo-branch: main
+  repo-url: "https://github.com/franckalbinet/spik"
