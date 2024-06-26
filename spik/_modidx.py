@@ -31,4 +31,6 @@ d = { 'settings': { 'branch': 'main',
                                     'spik.preprocessing.MeanReplicates.fit': ( 'preprocessing.html#meanreplicates.fit',
                                                                                'spik/preprocessing.py'),
                                     'spik.preprocessing.MeanReplicates.transform': ( 'preprocessing.html#meanreplicates.transform',
-                                                                                     'spik/preprocessing.py')}}}
+                                                                                     'spik/preprocessing.py'),
+                                    'spik.preprocessing.wl_to_wn': ('preprocessing.html#wl_to_wn', 'spik/preprocessing.py'),
+                                    'spik.preprocessing.wn_to_wl': ('preprocessing.html#wn_to_wl', 'spik/preprocessing.py')}}}
