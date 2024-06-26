@@ -1,0 +1,194 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "spik",
+    "section": "",
+    "text": "This file will become your README and also the index of your documentation.",
+    "crumbs": [
+      "spik"
+    ]
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "spik",
+    "section": "Install",
+    "text": "Install\npip install spik",
+    "crumbs": [
+      "spik"
+    ]
+  },
+  {
+    "objectID": "index.html#todo",
+    "href": "index.html#todo",
+    "title": "spik",
+    "section": "TODO",
+    "text": "TODO",
+    "crumbs": [
+      "spik"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "spik",
+    "section": "How to use",
+    "text": "How to use\nFill me in please! Don’t forget code examples:\n\n\n\n2",
+    "crumbs": [
+      "spik"
+    ]
+  },
+  {
+    "objectID": "paper/adsorption-isotherms.html",
+    "href": "paper/adsorption-isotherms.html",
+    "title": "Adsorption isotherms",
+    "section": "",
+    "text": "import pandas as pd\nimport matplotlib.pyplot as plt\nimport fastcore.all as fc",
+    "crumbs": [
+      "paper",
+      "Adsorption isotherms"
+    ]
+  },
+  {
+    "objectID": "paper/adsorption-isotherms.html#import",
+    "href": "paper/adsorption-isotherms.html#import",
+    "title": "Adsorption isotherms",
+    "section": "",
+    "text": "import pandas as pd\nimport matplotlib.pyplot as plt\nimport fastcore.all as fc",
+    "crumbs": [
+      "paper",
+      "Adsorption isotherms"
+    ]
+  },
+  {
+    "objectID": "paper/adsorption-isotherms.html#vminteq-simulation",
+    "href": "paper/adsorption-isotherms.html#vminteq-simulation",
+    "title": "Adsorption isotherms",
+    "section": "VMinteq simulation",
+    "text": "VMinteq simulation\n\nData loading\n\nfname = '../../_data/k-spiking-isotherms.xlsx'\n\n\ndfs_sheets = pd.read_excel(fname, skiprows=1, usecols=[1,2,3,4,5], \n                           sheet_name=['LUI', 'SPA', 'TM'])\n\n\ndfs_sheets['LUI'].head()\n\n\n\n\n\n\n\n\nTotal dissolved\nTotal sorbed\nBound to SOM\nBound to Clay\nk_titrated\n\n\n\n\n0\n0.000002\n0.004998\n0.000156\n0.004843\n5\n\n\n1\n0.000003\n0.009997\n0.000313\n0.009684\n10\n\n\n2\n0.000005\n0.014995\n0.000472\n0.014523\n15\n\n\n3\n0.000007\n0.019993\n0.000632\n0.019360\n20\n\n\n4\n0.000009\n0.024991\n0.000795\n0.024196\n25\n\n\n\n\n\n\n\nMerge all sheets in one single data frame:\n\ndfs = []\nfor key, df_sheet in dfs_sheets.items():\n    df_sheet['soil'] = key\n    dfs.append(df_sheet)\n    \ndf = pd.concat(dfs, ignore_index=True)\ndf.head()\n\n\n\n\n\n\n\n\nTotal dissolved\nTotal sorbed\nBound to SOM\nBound to Clay\nk_titrated\nsoil\n\n\n\n\n0\n0.000002\n0.004998\n0.000156\n0.004843\n5\nLUI\n\n\n1\n0.000003\n0.009997\n0.000313\n0.009684\n10\nLUI\n\n\n2\n0.000005\n0.014995\n0.000472\n0.014523\n15\nLUI\n\n\n3\n0.000007\n0.019993\n0.000632\n0.019360\n20\nLUI\n\n\n4\n0.000009\n0.024991\n0.000795\n0.024196\n25\nLUI\n\n\n\n\n\n\n\n\n\nData preprocessing\n\n# convert to cmol/kg\ngvm = 20 # Gravimetric Moisture Content in %\n\n\n# k_titrated in mmol/L while all others in mol/l\ndef to_cmol_kg(concentration, factor=1e-1, gvm=20): \n    return (concentration*factor)/(100/gvm)\n\n\ndf.columns\n\nIndex(['Total dissolved', 'Total sorbed', 'Bound to SOM', 'Bound to Clay',\n       'k_titrated', 'soil'],\n      dtype='object')\n\n\n\ndf[df['soil'] == 'LUI']\n\n\n\n\n\n\n\n\nTotal dissolved\nTotal sorbed\nBound to SOM\nBound to Clay\nk_titrated\nsoil\n\n\n\n\n0\n0.000002\n0.004998\n0.000156\n0.004843\n5\nLUI\n\n\n1\n0.000003\n0.009997\n0.000313\n0.009684\n10\nLUI\n\n\n2\n0.000005\n0.014995\n0.000472\n0.014523\n15\nLUI\n\n\n3\n0.000007\n0.019993\n0.000632\n0.019360\n20\nLUI\n\n\n4\n0.000009\n0.024991\n0.000795\n0.024196\n25\nLUI\n\n\n5\n0.000011\n0.029989\n0.000960\n0.029029\n30\nLUI\n\n\n6\n0.000014\n0.034986\n0.001126\n0.033860\n35\nLUI\n\n\n7\n0.000016\n0.039984\n0.001295\n0.038689\n40\nLUI\n\n\n8\n0.000018\n0.044982\n0.001466\n0.043516\n45\nLUI\n\n\n9\n0.000021\n0.049979\n0.001639\n0.048340\n50\nLUI\n\n\n10\n0.000055\n0.099945\n0.003525\n0.096419\n100\nLUI\n\n\n11\n0.000123\n0.149880\n0.005842\n0.144030\n150\nLUI\n\n\n12\n0.000308\n0.199690\n0.009127\n0.190560\n200\nLUI\n\n\n13\n0.001810\n0.248190\n0.016452\n0.231740\n250\nLUI\n\n\n14\n0.027193\n0.272810\n0.031055\n0.241750\n300\nLUI\n\n\n15\n0.070519\n0.279480\n0.037270\n0.242210\n350\nLUI\n\n\n16\n0.116950\n0.283050\n0.040727\n0.242330\n400\nLUI\n\n\n17\n0.164520\n0.285480\n0.043104\n0.242380\n450\nLUI\n\n\n18\n0.212680\n0.287320\n0.044911\n0.242400\n500\nLUI\n\n\n\n\n\n\n\n\n100*0.28/5\n\n5.6000000000000005\n\n\n\nfrom functools import partial\n\n\ndf['k_titrated'] = df['k_titrated'].apply(partial(to_cmol_kg, factor=1e-1))\ncoi = df.columns[:-2]\ndf[coi] = df[coi].apply(partial(to_cmol_kg, factor=1e2))\n\n\ndf\n\n\n\n\n\n\n\n\nTotal dissolved\nTotal sorbed\nBound to SOM\nBound to Clay\nk_titrated\nsoil\n\n\n\n\n0\n3.425800e-05\n0.099966\n0.003111\n0.096854\n0.1\nLUI\n\n\n1\n6.993000e-05\n0.199930\n0.006255\n0.193674\n0.2\nLUI\n\n\n2\n1.071000e-04\n0.299900\n0.009434\n0.290460\n0.3\nLUI\n\n\n3\n1.458700e-04\n0.399860\n0.012649\n0.387200\n0.4\nLUI\n\n\n4\n1.863400e-04\n0.499820\n0.015901\n0.483920\n0.5\nLUI\n\n\n5\n2.286200e-04\n0.599780\n0.019191\n0.580580\n0.6\nLUI\n\n\n6\n2.728400e-04\n0.699720\n0.022522\n0.677200\n0.7\nLUI\n\n\n7\n3.191400e-04\n0.799680\n0.025896\n0.773780\n0.8\nLUI\n\n\n8\n3.676800e-04\n0.899640\n0.029314\n0.870320\n0.9\nLUI\n\n\n9\n4.185800e-04\n0.999580\n0.032776\n0.966800\n1.0\nLUI\n\n\n10\n1.109680e-03\n1.998900\n0.070504\n1.928380\n2.0\nLUI\n\n\n11\n2.459400e-03\n2.997600\n0.116850\n2.880600\n3.0\nLUI\n\n\n12\n6.168800e-03\n3.993800\n0.182546\n3.811200\n4.0\nLUI\n\n\n13\n3.620200e-02\n4.963800\n0.329040\n4.634800\n5.0\nLUI\n\n\n14\n5.438600e-01\n5.456200\n0.621100\n4.835000\n6.0\nLUI\n\n\n15\n1.410380e+00\n5.589600\n0.745400\n4.844200\n7.0\nLUI\n\n\n16\n2.339000e+00\n5.661000\n0.814540\n4.846600\n8.0\nLUI\n\n\n17\n3.290400e+00\n5.709600\n0.862080\n4.847600\n9.0\nLUI\n\n\n18\n4.253600e+00\n5.746400\n0.898220\n4.848000\n10.0\nLUI\n\n\n19\n2.666000e-09\n0.100000\n0.002451\n0.097548\n0.1\nSPA\n\n\n20\n5.358800e-09\n0.200000\n0.004909\n0.195092\n0.2\nSPA\n\n\n21\n8.078800e-09\n0.300000\n0.007373\n0.292620\n0.3\nSPA\n\n\n22\n1.082620e-08\n0.400000\n0.009844\n0.390160\n0.4\nSPA\n\n\n23\n1.360140e-08\n0.500000\n0.012321\n0.487680\n0.5\nSPA\n\n\n24\n1.640520e-08\n0.600000\n0.014805\n0.585200\n0.6\nSPA\n\n\n25\n1.923760e-08\n0.700000\n0.017296\n0.682700\n0.7\nSPA\n\n\n26\n2.210000e-08\n0.800000\n0.019794\n0.780200\n0.8\nSPA\n\n\n27\n2.499000e-08\n0.900000\n0.022298\n0.877700\n0.9\nSPA\n\n\n28\n2.791200e-08\n1.000000\n0.024810\n0.975200\n1.0\nSPA\n\n\n29\n5.889400e-08\n2.000000\n0.050320\n1.949680\n2.0\nSPA\n\n\n30\n9.347800e-08\n3.000000\n0.076604\n2.923400\n3.0\nSPA\n\n\n31\n1.323300e-07\n4.000000\n0.103750\n3.896200\n4.0\nSPA\n\n\n32\n1.762820e-07\n5.000000\n0.131858\n4.868200\n5.0\nSPA\n\n\n33\n2.264000e-07\n6.000000\n0.161052\n5.839000\n6.0\nSPA\n\n\n34\n2.841000e-07\n7.000000\n0.191484\n6.808600\n7.0\nSPA\n\n\n35\n3.511800e-07\n8.000000\n0.223340\n7.776600\n8.0\nSPA\n\n\n36\n4.301200e-07\n9.000000\n0.256840\n8.743200\n9.0\nSPA\n\n\n37\n5.243800e-07\n10.000000\n0.292300\n9.707800\n10.0\nSPA\n\n\n38\n9.910400e-07\n0.100000\n0.018601\n0.081398\n0.1\nTM\n\n\n39\n2.027200e-06\n0.199998\n0.037394\n0.162604\n0.2\nTM\n\n\n40\n3.111600e-06\n0.300000\n0.056386\n0.243620\n0.3\nTM\n\n\n41\n4.247400e-06\n0.400000\n0.075584\n0.324420\n0.4\nTM\n\n\n42\n5.438200e-06\n0.500000\n0.094998\n0.405000\n0.5\nTM\n\n\n43\n6.688200e-06\n0.600000\n0.114636\n0.485360\n0.6\nTM\n\n\n44\n8.001600e-06\n0.700000\n0.134508\n0.565480\n0.7\nTM\n\n\n45\n9.383000e-06\n0.800000\n0.154624\n0.645360\n0.8\nTM\n\n\n46\n1.083800e-05\n0.899980\n0.174992\n0.725000\n0.9\nTM\n\n\n47\n1.237180e-05\n0.999980\n0.195626\n0.804360\n1.0\nTM\n\n\n48\n3.388000e-05\n1.999960\n0.419700\n1.580280\n2.0\nTM\n\n\n49\n7.848200e-05\n3.000000\n0.691860\n2.308000\n3.0\nTM\n\n\n50\n2.037400e-04\n3.999800\n1.059300\n2.940400\n4.0\nTM\n\n\n51\n7.702800e-04\n4.999200\n1.633740\n3.365400\n5.0\nTM\n\n\n52\n1.348660e-02\n1.408140\n0.763100\n0.645040\n6.0\nTM\n\n\n53\n1.100480e-03\n2.392000\n1.286100\n1.105860\n7.0\nTM\n\n\n54\n7.250600e-04\n15.193200\n8.768600\n6.424600\n8.0\nTM\n\n\n55\n1.238180e-02\n2.236000\n1.370040\n0.865980\n9.0\nTM\n\n\n56\n4.854600e-02\n4.899200\n3.148000\n1.751240\n10.0\nTM\n\n\n\n\n\n\n\n\n\nPlotting isotherms\n\nfor s in ['LUI', 'SPA', 'TM']:\n    data = df[df.soil == s]\n\n    columns_to_plot = ['Total sorbed', 'Bound to SOM', 'Bound to Clay']\n    \n    colors = ['tab:orange', 'tab:blue', 'tab:green']\n    #line_styles = ['-', '--', ':']\n    line_styles = ['-', '--', '--']\n    \n    fig, ax = plt.subplots()\n    for col, color, line_style in zip(columns_to_plot, colors, line_styles):\n        ax.plot(data['k_titrated'], data[col], color=color, linestyle=line_style, label=col)\n    \n    plt.xlabel('K spiked in cmol(+)/kg') \n    plt.ylabel('K adsorbed in cmol(+)/kg') \n    plt.grid(True)\n    ax.legend()\n    ax.set_title(f'Sample: {s}')",
+    "crumbs": [
+      "paper",
+      "Adsorption isotherms"
+    ]
+  },
+  {
+    "objectID": "paper/adsorption-isotherms.html#labs-measurements",
+    "href": "paper/adsorption-isotherms.html#labs-measurements",
+    "title": "Adsorption isotherms",
+    "section": "Lab’s measurements",
+    "text": "Lab’s measurements\nAmount of K spiked vs. K measured (ICP-OES).\n\nData loading\n\nMOLAR_MASSES = {\n    'K': 39.0983,\n    'Cl': 35.4527,\n    'KCl': 74.56 # according to manufacturer\n}\n\nlut_dilution = fc.load_pickle('../../_data/dilution.pkl')\nicp_oes_label = fc.load_pickle('../../_data/icp_oes_label.pkl')\n\n\nfname = '../../_data/20231017 Frank NH4 acetate exchange.xlsx'\ndf = pd.read_excel(fname, skiprows=12, header=None)\n\ndf = df.iloc[:, [1, 5]]\ndf.columns = ['id', 'K (mg/L)']\n\ndf['id'] = pd.to_numeric(df['id'], errors='coerce')\ndf = df[df['id'].notna()]\ndf['id'] = df['id'].astype(int); df.head()\n\n\n\n\n\n\n\n\nid\nK (mg/L)\n\n\n\n\n0\n1\n0.021667\n\n\n1\n2\n0.037564\n\n\n2\n3\n0.831728\n\n\n3\n4\n0.814559\n\n\n4\n5\n1.231517\n\n\n\n\n\n\n\n\nicp_oes_label.extend([('BLANCO_1', 1), ('BLANCO_2', 2)])\ndf['label'] = df['id'].map({b: a for a, b in icp_oes_label})\ndf = df[~df['label'].isin(['BLANCO_1', 'BLANCO_2'])]\ndf.head()\n\n\n\n\n\n\n\n\nid\nK (mg/L)\nlabel\n\n\n\n\n2\n3\n0.831728\nL0-1\n\n\n3\n4\n0.814559\nL0-2\n\n\n4\n5\n1.231517\nS0-1\n\n\n5\n6\n1.274201\nS0-2\n\n\n6\n7\n0.804076\nT0-1\n\n\n\n\n\n\n\n\ndef get_cmol_K(k_ppm, volume=0.025): return k_ppm * 100 * volume / MOLAR_MASSES['K']\n\ndef to_cmol_kg(row, lut_dilution=lut_dilution):\n    smp_id = row['label'].split('-')[0]\n    dilution_factor = lut_dilution[smp_id]\n    return get_cmol_K(row['K (mg/L)']*dilution_factor)\n\n\n# Initial K (in cmol(+)/kg)\nk_spa = 1.85\nk_lui = 0.11\nk_tm = 0.5\n\n\ndf['K measured (cmol/kg)'] = df.apply(to_cmol_kg, axis=1)\ndf.drop(['K (mg/L)'], axis=1, inplace=True, )\ndf.head()\n\n\n\n\n\n\n\n\nid\nlabel\nK measured (cmol/kg)\n\n\n\n\n2\n3\nL0-1\n0.053182\n\n\n3\n4\nL0-2\n0.052084\n\n\n4\n5\nS0-1\n1.574898\n\n\n5\n6\nS0-2\n1.629484\n\n\n6\n7\nT0-1\n0.514137\n\n\n\n\n\n\n\n\ndf['smp_name'] = df['label'].map(lambda x: x.split('-')[0])\n\n\nsmp_name = ['LUI-0', 'LUI-1', 'LUI-2', 'LUI-3',\n            'SPA1-0', 'SPA1-1', 'SPA1-2', 'SPA1-3',\n            'TM4.1-0', 'TM4.1-1', 'TM4.1-2', 'TM4.1-3']\n\n\ndf.head()\n\n\n\n\n\n\n\n\nid\nlabel\nK measured (cmol/kg)\nsmp_name\n\n\n\n\n2\n3\nL0-1\n0.053182\nL0\n\n\n3\n4\nL0-2\n0.052084\nL0\n\n\n4\n5\nS0-1\n1.574898\nS0\n\n\n5\n6\nS0-2\n1.629484\nS0\n\n\n6\n7\nT0-1\n0.514137\nT0\n\n\n\n\n\n\n\n\ndf_measured = df[['K measured (cmol/kg)', 'smp_name']].groupby('smp_name').mean()\ndf_measured.head()\n\n\n\n\n\n\n\n\nK measured (cmol/kg)\n\n\nsmp_name\n\n\n\n\n\nL0\n0.052633\n\n\nL1\n0.120278\n\n\nL2\n0.557428\n\n\nL3\n8.808574\n\n\nS0\n1.602191\n\n\n\n\n\n\n\n\nget_smp_name = lambda x: [f'{x}{d}' for d in [0, 1, 2, 3]]\nget_spiked_K_amount = lambda x: [x + d for d in [0, 0.1, 1, 10]]\n\ndata = []\nfor smp_prefix, init_k in [('L', k_lui), ('S', k_spa), ('T', k_tm)]:\n    data.extend(list(zip(get_smp_name(smp_prefix), get_spiked_K_amount(init_k))))\n\ndf_spiked = pd.DataFrame(data, columns=['smp_name', 'K spiked (cmol/kg)']).set_index('smp_name')\ndf_spiked\n\n\n\n\n\n\n\n\nK spiked (cmol/kg)\n\n\nsmp_name\n\n\n\n\n\nL0\n0.11\n\n\nL1\n0.21\n\n\nL2\n1.11\n\n\nL3\n10.11\n\n\nS0\n1.85\n\n\nS1\n1.95\n\n\nS2\n2.85\n\n\nS3\n11.85\n\n\nT0\n0.50\n\n\nT1\n0.60\n\n\nT2\n1.50\n\n\nT3\n10.50\n\n\n\n\n\n\n\n\ndf_measured_vs_spiked = df_measured.join(df_spiked); df_measured_vs_spiked\n\n\n\n\n\n\n\n\nK measured (cmol/kg)\nK spiked (cmol/kg)\n\n\nsmp_name\n\n\n\n\n\n\nL0\n0.052633\n0.11\n\n\nL1\n0.120278\n0.21\n\n\nL2\n0.557428\n1.11\n\n\nL3\n8.808574\n10.11\n\n\nS0\n1.602191\n1.85\n\n\nS1\n1.752982\n1.95\n\n\nS2\n2.544179\n2.85\n\n\nS3\n9.720309\n11.85\n\n\nT0\n0.513927\n0.50\n\n\nT1\n0.588390\n0.60\n\n\nT2\n1.123894\n1.50\n\n\nT3\n8.541135\n10.50\n\n\n\n\n\n\n\n\ndf_measured_vs_spiked.reset_index(inplace=True)\n\n\ndf_measured_vs_spiked['smp_name'] = df_measured_vs_spiked['smp_name'].apply(lambda x: x[0])\n\n\nprint(df_measured_vs_spiked)\n\n   smp_name  K measured (cmol/kg)  K spiked (cmol/kg)\n0         L              0.052633                0.11\n1         L              0.120278                0.21\n2         L              0.557428                1.11\n3         L              8.808574               10.11\n4         S              1.602191                1.85\n5         S              1.752982                1.95\n6         S              2.544179                2.85\n7         S              9.720309               11.85\n8         T              0.513927                0.50\n9         T              0.588390                0.60\n10        T              1.123894                1.50\n11        T              8.541135               10.50\n\n\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Create a dictionary to map smp_name to labels\nlabels = {'L': 'LUI', 'S': 'SPA', 'T': 'TM'}\n\ndf = df_measured_vs_spiked.copy()\n\n# Map smp_name to labels\ndf['smp_name'] = df['smp_name'].map(labels)\n\n# Create a list of colors for each label\ncolors = ['tab:blue', 'tab:orange', 'tab:green']\nmarkers = ['o', 's', '^']\n\n# Create the scatterplot\nfor i, label in enumerate(labels.values()):\n    subset = df[df['smp_name'] == label]\n    plt.scatter(subset['K spiked (cmol/kg)'], subset['K measured (cmol/kg)'], \n                label=label, color=colors[i], marker=markers[i], s=20)\n\n# Set the plot title and labels\nplt.title('K measured vs K spiked')\nplt.xlabel('K spiked (cmol/kg)')\nplt.ylabel('K measured (cmol/kg)')\n\nplt.xscale('log')\nplt.yscale('log')\n#plt.grid(True)\n\n# Add a legend\nplt.legend()",
+    "crumbs": [
+      "paper",
+      "Adsorption isotherms"
+    ]
+  },
+  {
+    "objectID": "loading.html",
+    "href": "loading.html",
+    "title": "Loading",
+    "section": "",
+    "text": "source\n\nload_mir\n\n load_mir (src_dir)\n\n*Load MIR spectra of K spiked soil samples.\nParameters: src_dir (Path-like object): Directory containing the spectra files.\nReturns: tuple: Tuple containing the array of absorbance values, array of wavenumbers (columns), and array of sample names (rows).*\nFor example:\n\nsrc_dir = Path().home() / 'pro/data/k-spiking/mir'\nX, wavenumbers, names = load_mir(src_dir)\nX.shape, wavenumbers.shape\n\n((58, 1738), (1738,))\n\n\n\nsource\n\n\nload_nir\n\n load_nir (fname)\n\n*Load NIR spectra of K spiked soil samples.\nParameters: fname (str or Path-like object): File name or path of the Excel file.\nReturns: tuple: Tuple containing the array of spectral values, array of wavenumbers (columns), and array of sample names (rows).*\nFor example:\n\nfname = Path().home() / '../data/k-spiking/nir/2023-12-8 _FT-NIR-K-spiked soil.xlsx'\n\n\nX, wavenumbers, names = load_nir(fname)\nX.shape, wavenumbers.shape\n\n((24, 949), (949,))",
+    "crumbs": [
+      "Loading"
+    ]
+  },
+  {
+    "objectID": "preprocessing.html",
+    "href": "preprocessing.html",
+    "title": "Preprocessing",
+    "section": "",
+    "text": "source\n\nwl_to_wn\n\n wl_to_wn (wavelength:float)\n\nConvert wavelength to wavenumber.\n\n\n\n\nType\nDetails\n\n\n\n\nwavelength\nfloat\nwavenumber in nm\n\n\nReturns\nfloat\nwavenumber in cm^-1\n\n\n\n\nsource\n\n\nwn_to_wl\n\n wn_to_wl (wavenumber:float)\n\nConvert wavenumber to wavelength.\n\n\n\n\nType\nDetails\n\n\n\n\nwavenumber\nfloat\nwavenumber in cm^-1\n\n\nReturns\nfloat\nwavelength in nm\n\n\n\n\nsource\n\n\nMeanCenter\n\n MeanCenter ()\n\nMean center spectra.\n\nsource\n\n\nMeanReplicates\n\n MeanReplicates (smp_name:str, names:List)\n\nSelect replicated of specified spectra and average their spiked versions.\n\n\n\n\nType\nDetails\n\n\n\n\nsmp_name\nstr\nSample of interest: ‘LUI’, ‘SPA1’ or ‘TM4.1’.\n\n\nnames\nList\nNames of scanned samples and replicates.\n\n\n\n\nsource\n\n\nDWTFiltering\n\n DWTFiltering (wavelet='db2', filtered_levels=[0, -1, -2], verbose=False)\n\n*Base class for all estimators in scikit-learn.\nInheriting from this class provides default implementations of:\n\nsetting and getting parameters used by GridSearchCV and friends;\ntextual and HTML representation displayed in terminals and IDEs;\nestimator serialization;\nparameters validation;\ndata validation;\nfeature names validation.\n\nRead more in the :ref:User Guide &lt;rolling_your_own_estimator&gt;.*\n\nsource\n\n\nDiffFromUnspiked\n\n DiffFromUnspiked ()\n\n*Base class for all estimators in scikit-learn.\nInheriting from this class provides default implementations of:\n\nsetting and getting parameters used by GridSearchCV and friends;\ntextual and HTML representation displayed in terminals and IDEs;\nestimator serialization;\nparameters validation;\ndata validation;\nfeature names validation.\n\nRead more in the :ref:User Guide &lt;rolling_your_own_estimator&gt;.*",
+    "crumbs": [
+      "Preprocessing"
+    ]
+  },
+  {
+    "objectID": "paper/spectra-differences.html",
+    "href": "paper/spectra-differences.html",
+    "title": "Spectra differences",
+    "section": "",
+    "text": "The autoreload extension is already loaded. To reload it, use:\n  %reload_ext autoreload\n\n\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport fastcore.all as fc\nfrom pathlib import Path\nfrom sklearn.pipeline import Pipeline\nimport numpy as np\n\nfrom spik.loading import load_mir, load_nir\nfrom spik.preprocessing import (MeanCenter, MeanReplicates, DWTFiltering, DiffFromUnspiked,\n                                wn_to_wl, wl_to_wn)\n\n\ndeep_blue, blue, orange, red = '#0571b0', '#92c5de', '#f4a582', '#ca0020'",
+    "crumbs": [
+      "paper",
+      "Spectra differences"
+    ]
+  },
+  {
+    "objectID": "paper/spectra-differences.html#import",
+    "href": "paper/spectra-differences.html#import",
+    "title": "Spectra differences",
+    "section": "",
+    "text": "The autoreload extension is already loaded. To reload it, use:\n  %reload_ext autoreload\n\n\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport fastcore.all as fc\nfrom pathlib import Path\nfrom sklearn.pipeline import Pipeline\nimport numpy as np\n\nfrom spik.loading import load_mir, load_nir\nfrom spik.preprocessing import (MeanCenter, MeanReplicates, DWTFiltering, DiffFromUnspiked,\n                                wn_to_wl, wl_to_wn)\n\n\ndeep_blue, blue, orange, red = '#0571b0', '#92c5de', '#f4a582', '#ca0020'",
+    "crumbs": [
+      "paper",
+      "Spectra differences"
+    ]
+  },
+  {
+    "objectID": "paper/spectra-differences.html#utils",
+    "href": "paper/spectra-differences.html#utils",
+    "title": "Spectra differences",
+    "section": "Utils",
+    "text": "Utils\n\ndef plot_spectra(X, wavenumbers, colors, labels, title, \n                 xlabel='Wavenumber ($cm^{-1}$)', ylabel='Absorbance',\n                 spectra_type='MIR', figsize=(12, 5), locator=250, lw=1,\n                 tight_layout=False):\n    \n    fig, ax = plt.subplots(figsize=figsize)\n    X = X[:, :len(wavenumbers)]\n    \n    for i in range(X.shape[0]):\n        ax.plot(wavenumbers, X[i], color=colors[i], label=labels[i], lw=lw)\n    \n    ax.xaxis.set_major_locator(plt.MultipleLocator(locator))\n    ax.grid(True)\n    ax.invert_xaxis()\n    ax.set_xlabel(xlabel)\n    ax.set_ylabel(ylabel)\n    ax.set_title(title)\n    if tight_layout: \n        ax.set_xticklabels([])\n        ax.set_yticklabels([])\n    else:\n       ax.legend()\n\n\ndef load_data(spectra_type):\n    if spectra_type == 'MIR':\n        fname = Path('../../_data/mir')\n        X, wavenumbers, names = load_mir(fname)        \n    else:\n        fname = Path('../../_data/nir/2023-12-8 _FT-NIR-K-spiked soil.xlsx')\n        X, wavenumbers, names = load_nir(fname)\n\n    return X, wavenumbers, names",
+    "crumbs": [
+      "paper",
+      "Spectra differences"
+    ]
+  },
+  {
+    "objectID": "paper/spectra-differences.html#mean-replicates",
+    "href": "paper/spectra-differences.html#mean-replicates",
+    "title": "Spectra differences",
+    "section": "Mean replicates",
+    "text": "Mean replicates\n\nMIR\n\nspectra_type = 'MIR'\nX, wavenumbers, names = load_data(spectra_type)\n\nfor smp_name in ['TM4.1', 'LUI', 'SPA1']:\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names))\n    ])\n    \n    plot_spectra(pipe.fit_transform(X), wavenumbers,\n                 [deep_blue, blue, orange, red], ['Original', '0.1', '1', '10'],\n                 f'Soil name: {smp_name}', figsize=(12, 3))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNIR\n\nspectra_type = 'NIR'\n\nX, wavenumbers, names = load_data(spectra_type)\nprint('X shape: ', X.shape, 'Wavenumbers shape: ', wavenumbers.shape)\nprint('First 10 wavenumbers: ', wavenumbers[:10])\nprint('First 5 names: ', names[:5])\n\nX shape:  (24, 949) Wavenumbers shape:  (949,)\nFirst 10 wavenumbers:  [11536 11528 11520 11512 11504 11496 11488 11480 11472 11464]\nFirst 5 names:  ['LUI-0-0' 'LUI-0-1' 'LUI-1-0' 'LUI-1-1' 'LUI-2-0']\n\n\n\nfor smp_name in ['TM4.1', 'LUI', 'SPA1']:\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names))\n    ])\n    \n    plot_spectra(pipe.fit_transform(X), wavenumbers,\n                 [deep_blue, blue, orange, red], ['Original', '0.1', '1', '10'], \n                 f'Soil name: {smp_name}', figsize=(12, 3), locator=500)",
+    "crumbs": [
+      "paper",
+      "Spectra differences"
+    ]
+  },
+  {
+    "objectID": "paper/spectra-differences.html#mean-replicates-without-baseline-noise",
+    "href": "paper/spectra-differences.html#mean-replicates-without-baseline-noise",
+    "title": "Spectra differences",
+    "section": "Mean replicates without baseline & noise",
+    "text": "Mean replicates without baseline & noise\n\nMIR\n\nspectra_type = 'MIR'\n\nX, wavenumbers, names = load_data(spectra_type)\n\nfor smp_name in ['TM4.1', 'LUI', 'SPA1']:\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names)),\n        ('DWT filtering', DWTFiltering(filtered_levels=[0, -1, -2, -3]))\n    ])\n    X_sample = pipe.fit_transform(X)\n    plot_spectra(pipe.fit_transform(X), wavenumbers,\n                 [deep_blue, blue, orange, red], ['Original', '0.1', '1', '10'], \n                 f'Soil name: {smp_name}', figsize=(12, 3))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNIR\n\nspectra_type = 'NIR'\nX, wavenumbers, names = load_data(spectra_type)\n\nfor smp_name in ['TM4.1', 'LUI', 'SPA1']:\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names)),\n        ('DWT filtering', DWTFiltering(filtered_levels=[0, -1, -2, -3]))\n    ])\n    \n    X_sample = pipe.fit_transform(X)\n    plot_spectra(pipe.fit_transform(X), wavenumbers,\n                 [deep_blue, blue, orange, red], ['Original', '0.1', '1', '10'], \n                 f'Soil name: {smp_name}', figsize=(12, 3), locator=500)",
+    "crumbs": [
+      "paper",
+      "Spectra differences"
+    ]
+  },
+  {
+    "objectID": "paper/spectra-differences.html#differences-without-baseline-and-noise",
+    "href": "paper/spectra-differences.html#differences-without-baseline-and-noise",
+    "title": "Spectra differences",
+    "section": "Differences without baseline and noise",
+    "text": "Differences without baseline and noise\n\nMIR\n\nspectra_type = 'MIR'\nX, wavenumbers, names = load_data(spectra_type)\n\nfor smp_name in ['TM4.1', 'LUI', 'SPA1']:\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names)),\n        ('DWT filtering', DWTFiltering(filtered_levels=[0, -1, -2, -3])),\n        ('Difference from non manipulated soil', DiffFromUnspiked())\n    ])\n    \n    X_sample = pipe.fit_transform(X)\n    plot_spectra(X_sample, wavenumbers,[deep_blue, orange, red], \n                 ['0.1', '1', '10'], f'Soil name: {smp_name}', figsize=(12,3))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNIR\n\nspectra_type = 'NIR'\nX, wavenumbers, names = load_data(spectra_type)\n\nfor smp_name in ['TM4.1', 'LUI', 'SPA1']:\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names)),\n        ('DWT filtering', DWTFiltering(filtered_levels=[0, -1, -2, -3])),\n        ('Difference from non manipulated soil', DiffFromUnspiked())\n    ])\n    \n    X_sample = pipe.fit_transform(X)\n    plot_spectra(X_sample, wavenumbers,[deep_blue, orange, red], \n                 ['0.1', '1', '10'], f'Soil name: {smp_name}', figsize=(12,3), locator=500)",
+    "crumbs": [
+      "paper",
+      "Spectra differences"
+    ]
+  },
+  {
+    "objectID": "paper/spectra-differences.html#differences-by-dwt-decomposition-level",
+    "href": "paper/spectra-differences.html#differences-by-dwt-decomposition-level",
+    "title": "Spectra differences",
+    "section": "Differences by DWT decomposition level",
+    "text": "Differences by DWT decomposition level\n\nMIR\n\n# level = 1\n# print(f'wavelet support (in wavenumber): {2*2**(10-level)}')\n# filtered_levels = [el for i, el in enumerate(range(10)) if i != level]\n# print(f'Filtered levels: {filtered_levels}')\n\nspectra_type = 'MIR'\nX, wavenumbers, names = load_data(spectra_type)\n\nsmp_name = 'SPA1'\nlevels = range(1, 10)\nfor level in levels: \n    filtered_levels = [el for i, el in enumerate(range(10)) if i != level]\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names)),\n        ('DWT filtering', DWTFiltering(filtered_levels=filtered_levels, verbose=False)),\n        ('Difference from non manipulated soil', DiffFromUnspiked())\n    ])\n    \n    X_sample = pipe.fit_transform(X)\n    plot_spectra(X_sample, wavenumbers,[deep_blue, orange, red], \n                 ['0.1', '1', '10'], \n                 ylabel=f'{2*2**(10-level)}', xlabel='',\n                 title='', figsize=(12,1), lw=1, tight_layout=True)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNIR\n\n# level = 1\n# print(f'wavelet support (in wavenumber): {2*2**(10-level)}')\n# filtered_levels = [el for i, el in enumerate(range(10)) if i != level]\n# print(f'Filtered levels: {filtered_levels}')\n\nspectra_type = 'NIR'\nX, wavenumbers, names = load_data(spectra_type)\n\nsmp_name = 'SPA1'\nlevels = range(1, 9)\nfor level in levels: \n    # filtered_levels = [el for i, el in enumerate(range(9) if i != level]\n    filtered_levels = [el for i, el in enumerate(range(9)) if i != level]\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names)),\n        ('DWT filtering', DWTFiltering(filtered_levels=filtered_levels, verbose=False)),\n        ('Difference from non manipulated soil', DiffFromUnspiked())\n    ])\n    \n    X_sample = pipe.fit_transform(X)\n    plot_spectra(X_sample, wavenumbers,[deep_blue, orange, red], \n                 ['0.1', '1', '10'], \n                 ylabel=f'{8*2**(9-level)}', xlabel='',\n                 title='', figsize=(12,1), lw=1, tight_layout=True, locator=500)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlevel = 4\nprint(f'wavelet support (in wavenumber): {8*2**(9-level)}')\nfiltered_levels = [el for i, el in enumerate(range(9)) if i != level]\nprint(f'Filtered levels: {filtered_levels}')\n\nspectra_type = 'NIR'\nX, wavenumbers, names = load_data(spectra_type)\n\nfor smp_name in ['TM4.1', 'LUI', 'SPA1']:\n    pipe = Pipeline([\n        ('mean center replicates', MeanReplicates(smp_name, names)),\n        ('DWT filtering', DWTFiltering(wavelet='db2', filtered_levels=filtered_levels, verbose=False)),\n        ('Difference from non manipulated soil', DiffFromUnspiked())\n    ])\n    \n    X_sample = pipe.fit_transform(X)\n    plot_spectra(X_sample, wavenumbers,[deep_blue, orange, red], \n                 ['0.1', '1', '10'], smp_name, figsize=(12,3), locator=500, lw=1)\n\nwavelet support (in wavenumber): 256\nFiltered levels: [0, 1, 2, 3, 5, 6, 7, 8]",
+    "crumbs": [
+      "paper",
+      "Spectra differences"
+    ]
+  },
+  {
+    "objectID": "paper/spectra-differences.html#wavenumber-diagnosis-wip",
+    "href": "paper/spectra-differences.html#wavenumber-diagnosis-wip",
+    "title": "Spectra differences",
+    "section": "Wavenumber diagnosis (WIP)",
+    "text": "Wavenumber diagnosis (WIP)\nIn my paper: - 3700–3400 cm−1: albinet et al. 2022,Viscarra Rossel et al., 2006; Le Guillou et al., 2015). absorption peaks of soil constituents such as calcite, kaolinite, 2:1 type clay minerals, and the features of free water - 1200–970 cm−1: assigned to Si–O stretching (Farmer, 1974) - 3000–2800 cm−1 spectral region (Le Guillou et al., 2015). high organic matter content such as Histosols, Gelisols and Andisols\nBased on plots.\nMIR: - 1500-1250: (smectite: Rossel et al. 2006) - 1250-1000: - 4000-3500: kaolinite\nNIR: - 4000-5000: O-H bonds, in lattice minerals, Kaolinite - 5000-5500: O-H bonds - 7000-7500: O-H bonds, Kaolinite - 10500-11500:\n\nwn_to_wl(1500)\n\n6666.666666666667\n\n\n\nwl_to_wn(2400)\n\n4166.666666666667",
+    "crumbs": [
+      "paper",
+      "Spectra differences"
+    ]
+  }
+]
